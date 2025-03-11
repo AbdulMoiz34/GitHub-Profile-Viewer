@@ -1,0 +1,31 @@
+body {
+    background: #f0f2f5;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hero {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.search-section {
+    margin-top: 20px;
+}
+
+.result-card {
+    margin-top: 40px;
+    display: none;
+}
+
+.card-img-top {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 20px auto 0;
+}
+.bold {
+    font-weight: bolder;
+}
