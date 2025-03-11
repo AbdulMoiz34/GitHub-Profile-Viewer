@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Viewer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-bold text-center mb-4">GitHub Profile Viewer</h2>
+        <div class="flex space-x-2">
+            <input type="text" id="githubUsername" placeholder="Enter GitHub username"
+                class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="fetchData()"
+                class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Submit</button>
+        </div>
+        <div id="profile" class="mt-6 text-center hidden">
+            <img id="avatar" class="w-24 h-24 mx-auto rounded-full border" alt="GitHub Avatar">
+            <h3 id="name" class="text-xl font-semibold mt-2"></h3>
+            <p id="username" class="text-gray-500"></p>
+            <p id="joinDate" class="text-gray-700"></p>
+            <p id="repoCount" class="font-medium text-blue-700"></p>
+        </div>
+    </div>
+
+    <script>
+        function fetchData() {
+            const username = document.querySelector("#githubUsername").value.trim();
+            if (!username) return alert("Please Enter a Github username.");
+            const usernameEl = document.querySelector("#username");
+            const img = document.querySelector("#avatar");
+            const name = document.querySelector("#name");
+            const joinDate = document.querySelector("#joinDate");
+            const repoCount = document.querySelector("#repoCount");
+            fetch(`https://api.github.com/users/${username}`)
+                .then(res => res.json()).then(function (data) {
+                    if (data.message) {
+                        alert("Not found");
+                        return;
+                    }
+                    console.log(data);
+                    img.src = data.avatar_url;
+                    name.textContent = data.name;
+                    usernameEl.textContent = data.login;
+                    joinDate.textContent = `Joined Date: ${new Date(data.created_at).toDateString()}`;
+                    repoCount.textContent = `Public Repo: ${data.public_repos}`;
+                    document.querySelector("#profile").classList.remove("hidden");
+                });
+        }
+    </script>
+</body>
+
+</html>
